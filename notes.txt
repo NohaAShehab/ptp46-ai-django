@@ -1,0 +1,12 @@
+
+
+jinja2 ---> provide built-in functionalies  --> allows you write python-like
+funcitonalities  ??  if condition, for loop , ====>>
+
+// provide special functionalities for url_reversing
+
+provide tags ??
+
+{% url 'students.about' %}  # django template search for project urls about
+url with name students.about ---> get the path associated with the name
+/students/about

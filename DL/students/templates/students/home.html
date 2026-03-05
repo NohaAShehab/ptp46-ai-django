@@ -1,0 +1,45 @@
+{% extends  'students/base.html'  %}
+
+
+
+
+
+{% block body %}
+    <h1> Hello from home page </h1>
+
+
+any content
+{% endblock %}
+
+{% block content %}
+    <h1> Hello from home page 222  </h1>
+{{name}}
+{{track}}
+{{students}}
+
+<h1> All students</h1>
+
+<table border="2px">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for student in students %}
+            <tr>
+                <td>{{student.id}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.salary}}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+{% endblock %}
+
+

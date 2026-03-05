@@ -65,6 +65,10 @@ def about_us(request):
 
 
 
+def home(request):
+    return render(request, "students/home.html",
+                  context={"name": "noha", "track": "ai", "students": students})
+
 
 
 

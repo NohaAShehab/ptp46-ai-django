@@ -15,20 +15,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path , include
 from students.views import hello, help_us, students_index, student_profile, about_us
 from departments.views import  about_departments, dept_profile
+from students.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test', hello, name='students.hello'),
-    path('help', help_us, name='students.help'),
-    path('index',students_index, name='students.index' ),
-    # path('index/<id>/<sal>', student_profile, name='students.profile' ),
-    # this url only accept index/val --> this value must be int, other 404
-    path('index/<int:id>', student_profile, name='students.profile' ),
-    path('about', about_us, name='students.about' ),
-    path("departments/about", about_departments, name="departments.about" ),
-    path('profile', dept_profile, name='departments.profile' ),
+    # path('test', hello, name='students.hello'),
+    # path('help', help_us, name='students.help'),
+    # path('index',students_index, name='students.index' ),
+    # # path('index/<id>/<sal>', student_profile, name='students.profile' ),
+    # # this url only accept index/val --> this value must be int, other 404
+    # path('index/<int:id>', student_profile, name='students.profile' ),
+    # path('about', about_us, name='students.about' ),
+    # path("departments/about", about_departments, name="departments.about" ),
+    # path('profile', dept_profile, name='departments.profile' ),
+
+    # include the url configuration file
+    path('students/', include('students.urls')),
+    path("departments/", include('departments.urls')),
+    # path("",home )
 
 
 ]

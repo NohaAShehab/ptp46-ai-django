@@ -1,0 +1,20 @@
+
+
+1- install django
+2- create project with name marketplace
+3- create application with name products
+this application contains   views
+    --> index (list all products )
+        each product has (id, name, price, stock_count, image)
+
+        button --> show
+
+    --> show when you click --> goto page display product information
+
+4- create application about_us --> add page for about us
+
+
+use AI to generate beautiful pages
+use template inheritance
+
+make sure to understand  all the backend functionalities you using
