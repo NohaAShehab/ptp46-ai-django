@@ -60,7 +60,7 @@ def student_profile(request,id):
 
 def about_us(request):
     # return with page about_us.html
-    return render(request, "about_us.html")
+    return render(request, "students/about_us.html")
 
 
 

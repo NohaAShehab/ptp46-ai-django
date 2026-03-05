@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # now I need to add students application
     # 'students'
+    'departments.apps.DepartmentsConfig',
     'students.apps.StudentsConfig',
+
 ]
 
 MIDDLEWARE = [

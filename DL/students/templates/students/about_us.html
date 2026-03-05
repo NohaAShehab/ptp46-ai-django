@@ -198,6 +198,89 @@
         .program-card h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: .5rem; }
         .program-card p { font-size: .93rem; color: var(--gray-600); }
 
+        /* ── Departments ── */
+        .departments {
+            background: var(--gray-200);
+        }
+        .departments .section-title p {
+            color: var(--gray-600);
+            max-width: 650px;
+            margin: -.8rem auto 2.5rem;
+            font-size: 1.05rem;
+        }
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .dept-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 1.8rem 1.6rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+            transition: transform .3s, box-shadow .3s;
+            border-left: 5px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+        .dept-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26,60,110,.03), transparent);
+            pointer-events: none;
+        }
+        .dept-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        .dept-card .dept-icon {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dept-card .dept-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: var(--white);
+        }
+        .dept-card .dept-info h3 {
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-bottom: .3rem;
+        }
+        .dept-card .dept-info p {
+            font-size: .88rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+        .dept-card .dept-info .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            margin-top: .6rem;
+        }
+        .dept-card .dept-info .tech-tag {
+            background: var(--gray-100);
+            color: var(--primary);
+            font-size: .75rem;
+            font-weight: 600;
+            padding: .2rem .6rem;
+            border-radius: 20px;
+            border: 1px solid var(--gray-200);
+        }
+
         /* ── Values ── */
         .values-grid {
             display: grid;
@@ -304,7 +387,7 @@
 
 <!-- Hero -->
 <section class="hero">
-    <h1>About <span>ITI</span></h1>
+    <h1>About <span>ITI Helllllllllllo</span></h1>
     <p>Information Technology Institute — Empowering Egypt's next generation of tech professionals since 1993.</p>
 </section>
 
@@ -388,6 +471,8 @@
         </div>
     </div>
 </section>
+
+
 
 <!-- Our Values -->
 <section style="background: var(--gray-200);">
