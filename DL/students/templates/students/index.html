@@ -1,23 +1,290 @@
 {% extends 'base.html' %}
 
-   {% block body %}
-    <h1> All students </h1>
-<table class="table table-striped">
-    <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>Show</th>
-        <th>Delete</th>
-    </tr>
-    {% for student in students %}
-        <tr>
-            <td> {{student.id }}</td>
-             <td> {{student.name }}</td>
-              <td> <a href="{% url 'students.show' student.id %}" class="btn btn-info"> Show</a></td>
-            <td> <a href="{% url 'students.delete' student.id %}" class="btn btn-danger"> Delete</a></td>
+{% block title %}All Students — ITI{% endblock %}
 
-        </tr>
-    {% endfor %}
-</table>
+{% block body %}
+<div class="page-header">
+    <h1>Our <span>Students</span></h1>
+    <p>Browse and manage all registered ITI students</p>
+</div>
 
-    {% endblock %}
+<div class="content-section">
+
+    <div class="index-toolbar">
+        <div class="student-count">
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            <span><strong>{{ students|length }}</strong> students enrolled</span>
+        </div>
+    </div>
+
+    {% if students %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Grade</th>
+                    <th>Gender</th>
+                    <th class="actions-col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td class="id-cell">{{ student.id }}</td>
+                    <td>
+                        <div class="student-name-cell">
+                            <div class="mini-avatar">{{ student.name|first }}</div>
+                            <span>{{ student.name }}</span>
+                        </div>
+                    </td>
+                    <td class="email-cell">{{ student.email|default:"—" }}</td>
+                    <td>{{ student.age }}</td>
+                    <td>
+                        {% if student.grade is not None %}
+                            <span class="grade-badge">{{ student.grade }}</span>
+                        {% else %}
+                            <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if student.gender == 'm' %}
+                            <span class="gender-tag male">Male</span>
+                        {% elif student.gender == 'f' %}
+                            <span class="gender-tag female">Female</span>
+                        {% else %}
+                            <span class="text-muted">—</span>
+                        {% endif %}
+                    </td>
+                    <td class="actions-cell">
+                        <a href="{% url 'students.show' student.id %}" class="action-btn show-btn" title="View profile">
+                            <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                            View
+                        </a>
+                        <a href="{% url 'students.delete' student.id %}" class="action-btn delete-btn" title="Delete student">
+                            <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        <h3>No Students Yet</h3>
+        <p>There are no students registered in the system.</p>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .index-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .student-count {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        color: var(--gray-600);
+        font-size: .95rem;
+    }
+    .student-count svg {
+        width: 22px;
+        height: 22px;
+        fill: var(--primary);
+    }
+    .student-count strong {
+        color: var(--primary);
+        font-size: 1.1rem;
+    }
+
+    .table-wrapper {
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+    }
+
+    table {
+        border-radius: 0;
+        box-shadow: none;
+    }
+    thead th {
+        padding: 1rem 1.2rem;
+        font-size: .85rem;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        white-space: nowrap;
+    }
+    tbody td {
+        padding: .85rem 1.2rem;
+        vertical-align: middle;
+    }
+
+    .id-cell {
+        font-weight: 700;
+        color: var(--primary);
+        width: 50px;
+        text-align: center;
+    }
+
+    .student-name-cell {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+    }
+    .mini-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        color: var(--white);
+        font-weight: 700;
+        font-size: .9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        flex-shrink: 0;
+    }
+    .student-name-cell span {
+        font-weight: 600;
+        color: var(--dark);
+    }
+
+    .email-cell {
+        font-size: .9rem;
+        color: var(--gray-600);
+    }
+
+    .grade-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: var(--gray-100);
+        border: 2px solid var(--accent);
+        border-radius: 10px;
+        font-weight: 700;
+        color: var(--primary);
+        font-size: .9rem;
+    }
+
+    .gender-tag {
+        display: inline-block;
+        padding: .2rem .8rem;
+        border-radius: 50px;
+        font-size: .78rem;
+        font-weight: 600;
+        letter-spacing: .3px;
+    }
+    .gender-tag.male {
+        background: rgba(42, 92, 168, .1);
+        color: var(--primary-light);
+    }
+    .gender-tag.female {
+        background: rgba(232, 168, 56, .15);
+        color: var(--accent-dark);
+    }
+
+    .text-muted {
+        color: var(--gray-400);
+        font-size: .9rem;
+    }
+
+    .actions-col { text-align: center; }
+    .actions-cell {
+        display: flex;
+        gap: .5rem;
+        justify-content: center;
+    }
+
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        padding: .4rem .9rem;
+        border-radius: 8px;
+        font-size: .82rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background .3s, transform .2s, color .3s;
+    }
+    .action-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    .action-btn:hover {
+        transform: translateY(-1px);
+    }
+
+    .show-btn {
+        background: rgba(42, 92, 168, .1);
+        color: var(--primary);
+    }
+    .show-btn svg { fill: var(--primary); }
+    .show-btn:hover {
+        background: var(--primary);
+        color: var(--white);
+    }
+    .show-btn:hover svg { fill: var(--white); }
+
+    .delete-btn {
+        background: rgba(239, 68, 68, .1);
+        color: #dc2626;
+    }
+    .delete-btn svg { fill: #dc2626; }
+    .delete-btn:hover {
+        background: #dc2626;
+        color: var(--white);
+    }
+    .delete-btn:hover svg { fill: var(--white); }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+    .empty-state svg {
+        width: 64px;
+        height: 64px;
+        fill: var(--gray-200);
+        margin-bottom: 1rem;
+    }
+    .empty-state h3 {
+        font-size: 1.3rem;
+        color: var(--primary);
+        margin-bottom: .4rem;
+    }
+    .empty-state p {
+        color: var(--gray-600);
+    }
+
+    @media (max-width: 768px) {
+        .actions-cell {
+            flex-direction: column;
+            gap: .3rem;
+        }
+        thead th, tbody td {
+            padding: .65rem .6rem;
+            font-size: .82rem;
+        }
+    }
+</style>
+{% endblock %}
