@@ -1,0 +1,12 @@
+
+
+1- connect application with db mysql/ postgres
+1.1 - don't forget to the basic migrations after connecting to the database
+2- create superuser for your admin dashboard
+3- create model for products application with the previous specs
+4- implement list_all, show, delete for each product
+
+5- bonus --> add images as static files and load it
+
+https://docs.djangoproject.com/en/6.0/topics/db/models/#using-models
+
