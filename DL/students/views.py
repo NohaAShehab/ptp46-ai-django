@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 # Create your views here.
 
@@ -72,10 +72,29 @@ def home(request):
 
 
 
+from students.models import Student
+
+def index(request):
+    # select * from students ;
+    # students = Student.objects.all()
+    students = Student.objects.all().order_by('id')
+    print(students)
+    # get all students from database , then display it in page index.html
+    return render(request, "students/index.html",
+                  context={"students": students})
 
 
+def show(request, id):
+    # select * from students where id =id ?
+    student = Student.objects.get(id=id)
+    student = get_object_or_404(Student, id=id)
+    return render(request, "students/show.html",
+                  context={"student": student})
 
 
-
+def delete(request, id):
+    student = Student.objects.get(id=id)
+    student.delete()
+    return redirect("students.index")
 
 

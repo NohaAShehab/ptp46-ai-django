@@ -34,6 +34,7 @@ urlpatterns = [
     # include the url configuration file
     path('students/', include('students.urls')),
     path("departments/", include('departments.urls')),
+    path("courses/", include('courses.urls')),
     # path("",home )
 
 
