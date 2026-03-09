@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Student — ITI{% endblock %}
+
+{% block body %}
+<div class="page-header">
+    <h1>Add <span>Student</span></h1>
+    <p>Add new Department to ITI system</p>
+</div>
+
+<div class="content-section">
+
+    <div class="form-card">
+        <form method="post" action=""   enctype="multipart/form-data" class="student-form">
+          {% csrf_token %}
+          <input type="text" name="name">
+          <input type="file" name="logo">
+          <input type="text" name="description">
+          <input type="submit" value="Submit">
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

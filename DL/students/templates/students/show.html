@@ -14,7 +14,7 @@
         <div class="profile-left">
             <div class="avatar">
                 {% if student.photo %}
-                    <img src="{{ student.photo }}" alt="{{ student.name }}">
+                    <img src="{{ student.image_url }}" alt="{{ student.name }}">
                 {% else %}
                     <span>{{ student.name|first }}</span>
                 {% endif %}

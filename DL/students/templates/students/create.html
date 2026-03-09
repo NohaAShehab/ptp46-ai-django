@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Student — ITI{% endblock %}
+
+{% block body %}
+<div class="page-header">
+    <h1>Add <span>Student</span></h1>
+    <p>Register a new student in the ITI system</p>
+</div>
+
+<div class="content-section">
+
+    <div class="form-card">
+        <form method="post" action=""   enctype="multipart/form-data"
+              class="student-form">
+            {% csrf_token %}
+
+            {% if errors %}
+            <div class="alert alert-error">
+                <strong>Please fix the errors below:</strong>
+                <ul class="error-list">
+                    {% for field, msg in errors.items %}
+                    <li>{{ field }}: {{ msg }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="id_name" name="name" placeholder="e.g. Ahmed Mohamed" value="{{ form_data.name|default:'' }}" required maxlength="100" autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    <input type="email" id="id_email" name="email" placeholder="student@example.com" value="{{ form_data.email|default:'' }}" maxlength="100">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_age">Age <span class="required">*</span></label>
+                    <input type="number" id="id_age" name="age" placeholder="e.g. 22" value="{{ form_data.age|default:'' }}" min="1" max="120" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_grade">Grade</label>
+                    <input type="number" id="id_grade" name="grade" placeholder="e.g. 85" value="{{ form_data.grade|default:'' }}" min="0" max="100" step="1">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_gender">Gender</label>
+                    <select id="id_gender" name="gender">
+                        <option value="">— Select —</option>
+                        <option value="m" {% if form_data.gender == 'm' %}selected{% endif %}>Male</option>
+                        <option value="f" {% if form_data.gender == 'f' %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_photo">Photo URL</label>
+                    <input type="file" id="id_photo" name="photo" placeholder="https://example.com/photo.jpg" value="{{ form_data.photo|default:'' }}" maxlength="100">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    Create Student
+                </button>
+                <a href="{% url 'students.index' %}" class="btn-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2.5rem;
+        max-width: 720px;
+        margin: 0 auto;
+        border-left: 4px solid var(--accent);
+    }
+
+    .student-form .required {
+        color: #dc2626;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        font-size: .9rem;
+        color: var(--primary);
+        margin-bottom: .35rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: .7rem 1rem;
+        border: 2px solid var(--gray-200);
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: .95rem;
+        color: var(--dark);
+        background: var(--white);
+        transition: border-color .3s, box-shadow .3s;
+        outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: var(--primary-light);
+        box-shadow: 0 0 0 3px rgba(42, 92, 168, .12);
+    }
+    .form-group input::placeholder {
+        color: var(--gray-400);
+    }
+
+    .error-list {
+        margin: .5rem 0 0 1rem;
+        padding: 0;
+    }
+    .error-list li {
+        margin: .2rem 0;
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--gray-200);
+    }
+
+    .form-actions .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    @media (max-width: 600px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        .form-card {
+            padding: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}

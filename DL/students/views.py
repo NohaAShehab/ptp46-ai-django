@@ -98,3 +98,31 @@ def delete(request, id):
     return redirect("students.index")
 
 
+def create(request):
+    if request.method == "POST":
+        # files are saved to (request.FILES)
+        print(request.POST)
+        print(request.FILES)
+        name = request.POST.get("name", "").strip()
+        age = request.POST.get("age")
+        email = request.POST.get("email", "").strip()
+        grade = request.POST.get("grade")
+        gender = request.POST.get("gender") or None
+        # photo = request.POST.get("photo", "").strip() or None
+        photo = request.FILES.get("photo")
+
+
+        student = Student()
+        student.name = name
+        student.age = age
+        student.email = email or None
+        student.grade = int(grade) if grade not in (None, "") else None
+        student.gender = gender
+        student.photo = photo
+        student.save()
+        return redirect("students.show", id=student.id)
+
+
+
+    return render(request, "students/create.html", context={"form_data": {}})
+

@@ -16,7 +16,7 @@
             <span><strong>{{ students|length }}</strong> students enrolled</span>
         </div>
     </div>
-
+    <a href="{% url 'students.create' %}"> Add student</a>
     {% if students %}
     <div class="table-wrapper">
         <table>

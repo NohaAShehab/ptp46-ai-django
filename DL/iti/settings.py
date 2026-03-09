@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     # 'students'
     'departments.apps.DepartmentsConfig',
     'students.apps.StudentsConfig',
-    'courses.apps.CoursesConfig'
+    'courses.apps.CoursesConfig',
+    'django_cleanup.apps.CleanupConfig',
 
 ]
 

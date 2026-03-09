@@ -18,8 +18,9 @@ class Student(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField(default=10)
     grade = models.IntegerField(null=True)
-    photo = models.CharField(max_length=100, null=True, blank=True)
-    email = models.EmailField(max_length=100, null=True, blank=True)
+    # photo = models.CharField(max_length=100, null=True, blank=True)
+    photo = models.ImageField(upload_to='students/images', null=True, blank=True)
+    email = models.EmailField(max_length=100, null=True, blank=True, unique=True)
     gender = models.CharField(max_length=100, null=True,blank=True,
                               choices=(('m', 'Male'), ('f', 'Female')))
     created_at = models.DateTimeField(auto_now_add=True, null=True) # trigger insert
@@ -27,3 +28,8 @@ class Student(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+    @property
+    def image_url(self):
+        return f'/media/{self.photo}'

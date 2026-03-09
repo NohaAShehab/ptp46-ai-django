@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
 from departments.models import Department
 
@@ -26,3 +26,15 @@ def show(request,id ):
     return render(request, 'departments/show.html',
                   context={'department': department})
 
+
+
+def create(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        logo = request.FILES.get('logo')
+        description = request.POST.get('description')
+        department = Department(name=name, logo=logo, description=description)
+        department.save()
+        return  redirect(department.show_url)
+
+    return render(request, 'departments/create.html')

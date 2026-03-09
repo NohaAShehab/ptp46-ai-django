@@ -1,0 +1,13 @@
+
+
+1- modify product to have image field (upload image)
+2- create form for create new product, edit product
+
+product :
+    name,
+    stock,
+    price,
+    image,
+    description,
+    created_at,
+    updated_at
