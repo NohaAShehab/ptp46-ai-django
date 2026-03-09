@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block title %}Departments — ITI{% endblock %}
+
+{% block body %}
+<div class="page-header">
+    <h1>Our <span>Departments</span></h1>
+    <p>Explore ITI's specialized training departments</p>
+</div>
+
+<div class="content-section">
+
+    <div class="dept-toolbar">
+        <div class="dept-count">
+            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+            <span><strong>{{ departments|length }}</strong> departments available</span>
+        </div>
+    </div>
+
+    {% if departments %}
+    <div class="dept-index-grid">
+        {% for dept in departments %}
+        <div class="dept-index-card">
+            <div class="dept-card-header">
+                <div class="dept-logo-circle">
+                    {% if dept.logo %}
+                        <img src="{{ dept.logo }}" alt="{{ dept.name }}">
+                    {% else %}
+                        <span>{{ dept.name|first }}</span>
+                    {% endif %}
+                </div>
+                <div class="dept-card-number">#{{ dept.id }}</div>
+            </div>
+            <div class="dept-card-body">
+                <h3>{{ dept.name }}</h3>
+                {% if dept.description %}
+                    <p>{{ dept.description|truncatewords:25 }}</p>
+                {% else %}
+                    <p class="no-desc">No description provided yet.</p>
+                {% endif %}
+            </div>
+<!--            <p> {% url 'departments.show' dept.id %} </p>-->
+<!--           <p style="color: red">  {{dept.show_url}} </p>-->
+            <div class="dept-card-footer">
+<!--                <a href="{% url 'departments.show' dept.id %}" class="dept-link">-->
+<!--                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>-->
+<!--                    Learn More-->
+<!--                </a>-->
+                 <a href="{{dept.show_url}}" class="dept-link">
+                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    Learn More
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+        <h3>No Departments Yet</h3>
+        <p>There are no departments registered in the system.</p>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dept-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.8rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .dept-count {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        color: var(--gray-600);
+        font-size: .95rem;
+    }
+    .dept-count svg {
+        width: 22px;
+        height: 22px;
+        fill: var(--primary);
+    }
+    .dept-count strong {
+        color: var(--primary);
+        font-size: 1.1rem;
+    }
+
+    .dept-index-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .dept-index-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform .3s, box-shadow .3s;
+        border-top: 4px solid var(--accent);
+    }
+    .dept-index-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .dept-card-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        padding: 1.8rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .dept-logo-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .15);
+        border: 3px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .dept-logo-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .dept-logo-circle span {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--accent);
+        text-transform: uppercase;
+    }
+
+    .dept-card-number {
+        font-size: .8rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, .5);
+        background: rgba(255, 255, 255, .1);
+        padding: .25rem .7rem;
+        border-radius: 50px;
+        letter-spacing: .5px;
+    }
+
+    .dept-card-body {
+        padding: 1.5rem;
+        flex: 1;
+    }
+    .dept-card-body h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: .6rem;
+    }
+    .dept-card-body p {
+        font-size: .93rem;
+        color: var(--gray-600);
+        line-height: 1.6;
+    }
+    .dept-card-body .no-desc {
+        font-style: italic;
+        color: var(--gray-400);
+    }
+
+    .dept-card-footer {
+        padding: 0 1.5rem 1.5rem;
+    }
+    .dept-link {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .5rem 1.2rem;
+        background: rgba(42, 92, 168, .08);
+        color: var(--primary);
+        border-radius: 8px;
+        font-size: .88rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background .3s, color .3s, transform .2s;
+    }
+    .dept-link svg {
+        width: 16px;
+        height: 16px;
+        fill: var(--primary);
+        transition: fill .3s;
+    }
+    .dept-link:hover {
+        background: var(--primary);
+        color: var(--white);
+        transform: translateY(-1px);
+    }
+    .dept-link:hover svg {
+        fill: var(--white);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+    }
+    .empty-state svg {
+        width: 64px;
+        height: 64px;
+        fill: var(--gray-200);
+        margin-bottom: 1rem;
+    }
+    .empty-state h3 {
+        font-size: 1.3rem;
+        color: var(--primary);
+        margin-bottom: .4rem;
+    }
+    .empty-state p {
+        color: var(--gray-600);
+    }
+
+    @media (max-width: 768px) {
+        .dept-index-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
