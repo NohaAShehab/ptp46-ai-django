@@ -16,7 +16,7 @@
         <div class="dept-show-left">
             <div class="dept-show-logo">
                 {% if department.logo %}
-                    <img src="{{ department.logo }}" alt="{{ department.name }}">
+                    <img src="{{ department.logo_url }}" alt="{{ department.name }}">
                 {% else %}
                     <span>{{ department.name|first }}</span>
                 {% endif %}

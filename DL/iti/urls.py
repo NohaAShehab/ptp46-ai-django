@@ -16,20 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
-from students.views import hello, help_us, students_index, student_profile, about_us
-from departments.views import  about_departments, dept_profile
-from students.views import home
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('test', hello, name='students.hello'),
-    # path('help', help_us, name='students.help'),
-    # path('index',students_index, name='students.index' ),
-    # # path('index/<id>/<sal>', student_profile, name='students.profile' ),
-    # # this url only accept index/val --> this value must be int, other 404
-    # path('index/<int:id>', student_profile, name='students.profile' ),
-    # path('about', about_us, name='students.about' ),
-    # path("departments/about", about_departments, name="departments.about" ),
-    # path('profile', dept_profile, name='departments.profile' ),
+
 
     # include the url configuration file
     path('students/', include('students.urls')),
@@ -38,4 +29,4 @@ urlpatterns = [
     # path("",home )
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

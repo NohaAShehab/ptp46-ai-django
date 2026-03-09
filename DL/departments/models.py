@@ -5,7 +5,8 @@ from django.shortcuts import reverse
 class Department(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True, blank=True)
-    logo = models.CharField(max_length=100, null=True, blank=True)
+    # logo = models.CharField(max_length=100, null=True, blank=True)
+    logo = models.ImageField(upload_to="departments/logo", null=True, blank=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -28,4 +29,8 @@ class Department(models.Model):
         url = reverse("departments.show", args=[self.id])
         # url = f"/departments/{self.id}"
         return url
+
+    @property
+    def logo_url(self):
+        return f'/media/{self.logo}'
 

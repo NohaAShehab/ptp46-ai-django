@@ -26,7 +26,7 @@
             <div class="dept-card-header">
                 <div class="dept-logo-circle">
                     {% if dept.logo %}
-                        <img src="{{ dept.logo }}" alt="{{ dept.name }}">
+                        <img src="{{ dept.logo_url }}" alt="{{ dept.name }}">
                     {% else %}
                         <span>{{ dept.name|first }}</span>
                     {% endif %}
