@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
 from departments.models import Department
+from students.forms import StudentForm
 
 # Create your views here.
 
@@ -133,4 +134,38 @@ def create(request):
 
     return render(request, "students/create.html",
                   context={"departments": departments})
+
+
+
+def create_via_form(request):
+    form  = StudentForm()
+    if request.method == "POST":
+        # files are saved to (request.FILES)
+        form  = StudentForm(request.POST, request.FILES)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            age = form.cleaned_data.get("age")
+            email = form.cleaned_data.get("email")
+            grade = form.cleaned_data.get("grade")
+            gender = form.cleaned_data.get("gender")
+            photo = form.cleaned_data.get("photo")
+            department = form.cleaned_data.get("department") # get dept_object _automatically
+            student = Student.objects.create(name=name,
+                                          age=age, email=email, grade=grade,
+                                          gender=gender, department=department, photo=photo)
+            return redirect("students.show", id=student.id)
+
+    return render(request, "students/forms/create.html",
+                  context={"form": form})
+
+
+
+
+
+
+
+
+
+
+
 

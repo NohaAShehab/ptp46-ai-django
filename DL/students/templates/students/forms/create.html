@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Student — ITI{% endblock %}
+
+{% block body %}
+<div class="page-header">
+    <h1>Add <span>Student</span></h1>
+    <p>Register a new student in the ITI system</p>
+</div>
+
+<div class="content-section">
+
+    <h1> Create student via form </h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Submit">
+    </form>
+
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 2.5rem;
+        max-width: 720px;
+        margin: 0 auto;
+        border-left: 4px solid var(--accent);
+    }
+
+    .student-form .required {
+        color: #dc2626;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        font-size: .9rem;
+        color: var(--primary);
+        margin-bottom: .35rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: .7rem 1rem;
+        border: 2px solid var(--gray-200);
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: .95rem;
+        color: var(--dark);
+        background: var(--white);
+        transition: border-color .3s, box-shadow .3s;
+        outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: var(--primary-light);
+        box-shadow: 0 0 0 3px rgba(42, 92, 168, .12);
+    }
+    .form-group input::placeholder {
+        color: var(--gray-400);
+    }
+
+    .error-list {
+        margin: .5rem 0 0 1rem;
+        padding: 0;
+    }
+    .error-list li {
+        margin: .2rem 0;
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--gray-200);
+    }
+
+    .form-actions .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    @media (max-width: 600px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        .form-card {
+            padding: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
