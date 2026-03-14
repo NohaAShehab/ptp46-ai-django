@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+
+from departments.models import Department
+
 # Create your views here.
 
 """ each view function accept request -->
@@ -86,8 +89,8 @@ def index(request):
 
 def show(request, id):
     # select * from students where id =id ?
-    student = Student.objects.get(id=id)
     student = get_object_or_404(Student, id=id)
+    print(student.department, type(student.department))
     return render(request, "students/show.html",
                   context={"student": student})
 
@@ -99,6 +102,7 @@ def delete(request, id):
 
 
 def create(request):
+    departments = Department.get_all()
     if request.method == "POST":
         # files are saved to (request.FILES)
         print(request.POST)
@@ -110,6 +114,8 @@ def create(request):
         gender = request.POST.get("gender") or None
         # photo = request.POST.get("photo", "").strip() or None
         photo = request.FILES.get("photo")
+        department = request.POST.get("department") # dept_id
+        department = Department.get_by_id(department)
 
 
         student = Student()
@@ -119,10 +125,12 @@ def create(request):
         student.grade = int(grade) if grade not in (None, "") else None
         student.gender = gender
         student.photo = photo
+        student.department = department
         student.save()
         return redirect("students.show", id=student.id)
 
 
 
-    return render(request, "students/create.html", context={"form_data": {}})
+    return render(request, "students/create.html",
+                  context={"departments": departments})
 

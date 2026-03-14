@@ -23,6 +23,13 @@ def index(request):
 
 def show(request,id ):
     department = Department.get_by_id(id)
+
+    #
+
+    # get student in this department ?
+    # select name, id from students_student where department_id = id;
+    # students = Student.objects.filter(department=department)
+    # print(department.students.all())
     return render(request, 'departments/show.html',
                   context={'department': department})
 

@@ -1,5 +1,7 @@
 from django.db import models
 
+from departments.models import Department
+
 # Create your models here.
 
 """
@@ -25,6 +27,8 @@ class Student(models.Model):
                               choices=(('m', 'Male'), ('f', 'Female')))
     created_at = models.DateTimeField(auto_now_add=True, null=True) # trigger insert
     updated_at = models.DateTimeField(auto_now=True, null=True)  # trigger update
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True,
+                                   related_name='students')
 
     def __str__(self):
         return f'{self.name}'

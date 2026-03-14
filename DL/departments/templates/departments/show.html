@@ -72,7 +72,13 @@
 
         </div>
     </div>
+    <div>
+        <h1> Students in this department</h1>
+        {% for student in department.students.all %}
+            <li> {{student}} </li>
+        {% endfor %}
 
+    </div>
     <div class="dept-show-actions">
         <a href="{% url 'departments.index' %}" class="btn-outline">
             &larr; Back to All Departments
