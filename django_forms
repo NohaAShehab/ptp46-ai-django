@@ -1,0 +1,5 @@
+
+use django =-> to create html forms
+--> provide options for data validation
+
+https://docs.djangoproject.com/en/6.0/topics/forms/

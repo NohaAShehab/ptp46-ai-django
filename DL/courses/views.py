@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from functools import reduce
+
+from django.shortcuts import render, get_object_or_404, redirect
+from courses.forms import CourseForm
+from courses.models import Course
 
 # Create your views here.
 
@@ -11,5 +15,29 @@ courses = [
 
 def index(request):
     # handle http
+    courses = Course.objects.all()
     return render(request, "courses/index.html",
                   context={"courses":courses})
+
+
+def show(request, id):
+    course = get_object_or_404(Course, id=id)
+    return render(request, "courses/show.html", context={"course": course})
+
+
+def create(request):
+    form = CourseForm()
+    if request.method == "POST":
+        form = CourseForm(request.POST, request.FILES)
+        if form.is_valid():
+            course= form.save()
+            return redirect(course.show_url)
+
+    return render(request, "courses/create.html",
+                      context={"form":form})
+
+
+def show(request, id):
+    course = get_object_or_404(Course, id=id)
+    print(course.pre_requisites.all())
+    return render(request, "courses/show.html", context={"course": course})
