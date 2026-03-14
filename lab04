@@ -1,0 +1,15 @@
+
+
+create full crud operations for Categories
+
+   category : id, name, descriptions, logo, created_at, updated_at
+
+  2- for product add category  ==> each product has one category
+
+  modify edit, create, show of the product to display its category
+
+  3- when click show category,display products inside this category
+
+  -4- modify 404 page with design matches the beautiful theme Ai created for.
+
+  5- for Hossam, make the product has more than one image

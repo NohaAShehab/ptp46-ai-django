@@ -2,6 +2,7 @@ from functools import reduce
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+from django.views.generic import CreateView, UpdateView
 from courses.forms import CourseForm
 from courses.models import Course
 
@@ -60,3 +61,21 @@ class CreateCourse(View):
         form  = CourseForm()
         return render(request, "courses/create.html",
                       context={"form": form})
+
+
+# using generic views ?
+
+class CreateCourseGeneric(CreateView):
+    form_class = CourseForm
+    template_name = "courses/create.html"
+    success_url = '/courses/'
+
+    # customize how the object is being created?
+
+class CourseUpdate(UpdateView):
+    model = Course
+    form_class = CourseForm
+    template_name = "courses/update.html"
+    success_url = '/courses/'
+    pk_url_kwarg = 'id'
+    # context_object_name = "sfsdf"
