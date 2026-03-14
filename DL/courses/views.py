@@ -1,8 +1,10 @@
 from functools import reduce
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
 from courses.forms import CourseForm
 from courses.models import Course
+
 
 # Create your views here.
 
@@ -41,3 +43,20 @@ def show(request, id):
     course = get_object_or_404(Course, id=id)
     print(course.pre_requisites.all())
     return render(request, "courses/show.html", context={"course": course})
+
+
+
+class CreateCourse(View):
+    def post(self, request):
+        form = CourseForm(request.POST, request.FILES)
+        if form.is_valid():
+            course = form.save()
+            return redirect(course.show_url)
+        return render(request, "courses/create.html",
+                      context={"form":form})
+
+
+    def get(self, request):
+        form  = CourseForm()
+        return render(request, "courses/create.html",
+                      context={"form": form})
